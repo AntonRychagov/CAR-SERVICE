@@ -42,6 +42,7 @@ export interface ErrorBoxProps {
 export interface DrawerContentProps {
   handleLinkClick: () => void;
   handleDrawerToggle: () => void;
+  isAuthenticated: boolean;
 }
 
 // интерфейс для ServiceCard
@@ -53,7 +54,15 @@ export interface ServiceCardProps {
   onClick?: (id: number) => void;
 }
 
-// Типы и интерфейсы для YandexMap
-export interface YandexMapProps {
+// тип для YandexMap
+export type YandexMapProps = {
   apiKey?: string;
-}
+};
+
+// тип для Login
+export type IFormInput = {
+  email: string;
+  password: string;
+};
+
+

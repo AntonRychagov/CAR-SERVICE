@@ -176,6 +176,7 @@ const Navbar: React.FC = observer(() => {
         <DrawerContent
           handleLinkClick={handleLinkClick}
           handleDrawerToggle={handleDrawerToggle}
+          isAuthenticated={isAuthenticated}
         />
       </Drawer>
       <ErrorBox

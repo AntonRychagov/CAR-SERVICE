@@ -11,6 +11,7 @@ import { Close as CloseIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { styled, Theme, useTheme } from "@mui/material/styles";
 import { DrawerContentProps } from "../../../shared/types";
+import { useAuth } from "../../../shared/lib/hooks/useAuth";
 
 const StyledLink = styled(Link)(({ theme }: { theme: Theme }) => ({
   textDecoration: "none",
@@ -27,6 +28,7 @@ const DrawerContent: React.FC<DrawerContentProps> = ({
   handleDrawerToggle,
 }) => {
   const theme = useTheme();
+  const { isAuthenticated } = useAuth();
 
   return (
     <Box sx={{ textAlign: "center" }}>
@@ -53,13 +55,23 @@ const DrawerContent: React.FC<DrawerContentProps> = ({
         <ListItem component={StyledLink} to="/" onClick={handleLinkClick}>
           <ListItemText primary="Главная" />
         </ListItem>
-        <ListItem
-          component={StyledLink}
-          to="/account"
-          onClick={handleLinkClick}
-        >
-          <ListItemText primary="Личный кабинет" />
-        </ListItem>
+        {isAuthenticated ? (
+          <ListItem
+            component={StyledLink}
+            to="/account"
+            onClick={handleLinkClick}
+          >
+            <ListItemText primary="Личный кабинет" />
+          </ListItem>
+        ) : (
+          <ListItem
+            component={StyledLink}
+            to="/login"
+            onClick={handleLinkClick}
+          >
+            <ListItemText primary="Вход/Регистрация" />
+          </ListItem>
+        )}
       </List>
     </Box>
   );
