@@ -24,7 +24,6 @@ const UserAccount: React.FC = () => {
         <ListItem>
           <ListItemText primary="Запись 2" secondary="Детали записи 2" />
         </ListItem>
-        {/* Добавьте больше записей */}
       </List>
       <Button variant="contained" color="primary" sx={{ marginTop: 2 }}>
         Редактировать информацию

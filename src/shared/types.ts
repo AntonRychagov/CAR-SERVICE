@@ -59,7 +59,7 @@ export type YandexMapProps = {
   apiKey?: string;
 };
 
-// тип для Login
+
 export type IFormInput = {
   email: string;
   password: string;
