@@ -80,7 +80,7 @@ const ServiceProvider: React.FC = () => {
         <ButtonContainer>
           <StyledButton
             variant="contained"
-            href="tel:+79969244853" // Ссылка для звонка
+            href="tel:+79999999999" // Ссылка для звонка
           >
             Записаться на услугу
           </StyledButton>
