@@ -1,35 +1,3 @@
-// import { useState, useEffect } from "react";
-
-// const useAuth = () => {
-//   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-//   useEffect(() => {
-//     // Здесь нужно добавить логику для проверки аутентификации пользователя, например, проверка наличия токена
-//     const token = localStorage.getItem("authToken");
-//     if (token) {
-//       setIsAuthenticated(true);
-//     }
-//   }, []);
-
-//   const login = (token: string) => {
-//     localStorage.setItem("authToken", token);
-//     setIsAuthenticated(true);
-//   };
-
-//   const logout = () => {
-//     localStorage.removeItem("authToken");
-//     setIsAuthenticated(false);
-//   };
-
-//   return {
-//     isAuthenticated,
-//     login,
-//     logout,
-//   };
-// };
-
-// export { useAuth };
-
 import { useEffect } from "react";
 import authStore from "../store/AuthStore";
 
@@ -38,23 +6,15 @@ const useAuth = () => {
     const token = localStorage.getItem("authToken");
     if (token) {
       authStore.isAuthenticated = true;
+      authStore.loginWithToken(token);
     }
   }, []);
 
-  const login = (token: string) => {
-    localStorage.setItem("authToken", token);
-    authStore.isAuthenticated = true;
-  };
-
-  const logout = () => {
-    localStorage.removeItem("authToken");
-    authStore.isAuthenticated = false;
-  };
-
   return {
     isAuthenticated: authStore.isAuthenticated,
-    login,
-    logout,
+    login: authStore.login.bind(authStore),
+    logout: authStore.logout.bind(authStore),
+    register: authStore.register.bind(authStore),
   };
 };
 

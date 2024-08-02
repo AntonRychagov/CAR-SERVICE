@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   AppBar,
@@ -176,7 +175,9 @@ const Navbar: React.FC = observer(() => {
       >
         <DrawerContent
           handleLinkClick={handleLinkClick}
-          handleDrawerToggle={handleDrawerToggle} isAuthenticated={false}        />
+          handleDrawerToggle={handleDrawerToggle}
+          isAuthenticated={false}
+        />
       </Drawer>
       <ErrorBox
         showError={searchStore.showError}
