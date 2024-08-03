@@ -49,15 +49,15 @@ class AuthStore {
     this.isAuthenticated = false;
   }
 
-  private setLoading(value: boolean) {
+  setLoading(value: boolean) {
     this.isLoading = value;
   }
 
-  private setError(message: string) {
+  setError(message: string) {
     this.error = message;
   }
 
-  private setToken(token: string) {
+  setToken(token: string) {
     this.token = token;
     if (token) {
       localStorage.setItem("authToken", token);

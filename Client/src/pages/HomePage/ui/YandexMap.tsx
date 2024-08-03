@@ -10,7 +10,6 @@ const mapState = {
 const services = [
   { id: 1, name: "Автосервис 555", coordinates: [51.031502, 59.876867] },
   { id: 2, name: "Автосервис 2", coordinates: [51.041502, 59.886867] }, // Изменены координаты для корректного отображения
-  // Добавьте больше сервисов
 ];
 
 const YandexMap: React.FC<YandexMapProps> = ({

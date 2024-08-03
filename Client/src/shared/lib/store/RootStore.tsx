@@ -1,12 +1,10 @@
-// src/shared/lib/store/RootStore.ts
-import React, { createContext, useContext } from "react";
+import React, { createContext } from "react";
 import { observer } from "mobx-react-lite";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import ThemeStore from "./ThemeStore";
 import SearchStore from "./SearchStore";
 import { RootStoreInterface } from "../../types";
-
 
 class RootStore implements RootStoreInterface {
   themeStore: ThemeStore;
@@ -32,13 +30,5 @@ export const RootStoreProvider: React.FC<{ children: React.ReactNode }> =
       </RootStoreContext.Provider>
     );
   });
-
-export const useRootStore = () => {
-  const store = useContext(RootStoreContext);
-  if (!store) {
-    throw new Error("useRootStore must be used within a RootStoreProvider");
-  }
-  return store;
-};
 
 export default RootStore;
