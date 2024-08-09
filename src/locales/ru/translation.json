@@ -1,0 +1,23 @@
+{
+  "navbar": {
+    "login": "Вход/Регистрация",
+    "account": "Личный кабинет",
+    "carService": "CAR SERVICE",
+    "searchPlaceholder": "Найти автосервис"
+  },
+
+  "errorBox": {
+    "errorTitle": "Ошибка",
+    "errorMessage": "Автосервис не найден, попробуем еще раз"
+  },
+
+  "drawerContent": {
+    "home": "Главная",
+    "login": "Вход/Регистрация",
+    "account": "Личный кабинет"
+  },
+
+  "banner": {
+    "title": "Подберите лучший автосервис в вашем городе"
+  }
+}

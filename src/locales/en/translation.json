@@ -1,0 +1,27 @@
+{
+  "navbar": {
+    "login": "Login/Registration",
+    "account": "Account",
+    "carService": "CAR SERVICE",
+    "searchPlaceholder": "Find a car service"
+  },
+
+  "errorBox": {
+    "errorTitle": "Error",
+    "errorMessage": "Car service not found, let's try again"
+  },
+
+  "drawerContent": {
+    "home": "Home",
+    "login": "Login/Registration",
+    "account": "Personal account"
+  },
+
+  "banner": {
+    "title": "Find the best car service in your city"
+  },
+
+  "footer": {
+    
+  }
+}
