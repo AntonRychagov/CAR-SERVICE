@@ -1,4 +1,4 @@
-import { Theme } from "@mui/material/styles";
+import { Theme } from '@mui/material/styles';
 
 // интерфейс для ThemeStore
 export interface ThemeStoreInterface {
@@ -30,6 +30,7 @@ export interface SearchBoxProps {
   setSearchTerm: (term: string) => void;
   handleSearch: () => void;
   handleKeyDown: (event: React.KeyboardEvent) => void;
+  placeholder?: string;
 }
 
 // интерфейс для ErrorBox
@@ -59,10 +60,7 @@ export type YandexMapProps = {
   apiKey?: string;
 };
 
-
 export type IFormInput = {
   email: string;
   password: string;
 };
-
-
