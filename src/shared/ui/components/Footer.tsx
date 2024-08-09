@@ -15,8 +15,6 @@ const FooterContainer = styled(Container)({
   textAlign: 'center',
 });
 
-// Test develop branch
-
 const Footer: React.FC = () => (
   <OuterFooterContainer>
     <FooterContainer maxWidth="lg">

@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   AppBar,
   Toolbar,
@@ -7,28 +8,28 @@ import {
   Container,
   IconButton,
   Drawer,
-} from "@mui/material";
-import { Menu as MenuIcon, WbSunny, Brightness3 } from "@mui/icons-material";
-import { Link, useNavigate } from "react-router-dom";
-import { styled, useTheme } from "@mui/material/styles";
-import { SearchBox } from "../../../widgets/SearchBox/ui/SearchBox";
-import { DrawerContent } from "./DrawerContent";
-import { ErrorBox } from "./ErrorBox";
-import { observer } from "mobx-react-lite";
-import { useRootStore } from "../../../shared/lib/hooks/useRootStore";
-import { useAuth } from "../../../shared/lib/hooks/useAuth";
+} from '@mui/material';
+import { Menu as MenuIcon, WbSunny, Brightness3 } from '@mui/icons-material';
+import { Link, useNavigate } from 'react-router-dom';
+import { styled, useTheme } from '@mui/material/styles';
+import { SearchBox } from '../../../widgets/SearchBox/ui/SearchBox';
+import { DrawerContent } from './DrawerContent';
+import { ErrorBox } from './ErrorBox';
+import { observer } from 'mobx-react-lite';
+import { useRootStore } from '../../../shared/lib/hooks/useRootStore';
+import { useAuth } from '../../../shared/lib/hooks/useAuth';
 
 const StyledLink = styled(Link)(({ theme }) => ({
-  textDecoration: "none",
-  color: "inherit",
-  display: "flex",
-  alignItems: "center",
-  fontSize: "1.25rem",
-  fontWeight: "bold",
+  textDecoration: 'none',
+  color: 'inherit',
+  display: 'flex',
+  alignItems: 'center',
+  fontSize: '1.25rem',
+  fontWeight: 'bold',
   marginRight: theme.spacing(2),
 }));
 
-const availableServices = ["Автосервис 1", "Автосервис 2", "Автомойка 1"]; // Пример данных
+const availableServices = ['Автосервис 1', 'Автосервис 2', 'Автомойка 1']; // Пример данных
 
 const Navbar: React.FC = observer(() => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -36,6 +37,7 @@ const Navbar: React.FC = observer(() => {
   const { themeStore, searchStore } = useRootStore();
   const muiTheme = useTheme();
   const { isAuthenticated } = useAuth();
+  const { t, i18n } = useTranslation(); // Подключаем t для перевода
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -49,12 +51,17 @@ const Navbar: React.FC = observer(() => {
     searchStore.setShowError(false);
   };
 
+  const toggleLanguage = () => {
+    const newLanguage = i18n.language === 'ru' ? 'en' : 'ru';
+    i18n.changeLanguage(newLanguage);
+  };
+
   return (
     <Box>
       <Box
         sx={{
-          width: "100%",
-          position: "fixed",
+          width: '100%',
+          position: 'fixed',
           top: 0,
           zIndex: 1100,
           backgroundColor: muiTheme.palette.background.default,
@@ -66,38 +73,39 @@ const Navbar: React.FC = observer(() => {
             position="static"
             color="default"
             elevation={0}
-            sx={{ backgroundColor: "transparent" }}
+            sx={{ backgroundColor: 'transparent' }}
           >
-            <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
                 edge="start"
                 onClick={handleDrawerToggle}
-                sx={{ display: { sm: "none" } }}
+                sx={{ display: { sm: 'none' } }}
               >
                 <MenuIcon />
               </IconButton>
-              <Box sx={{ display: { xs: "none", sm: "flex" }, flexGrow: 1 }}>
+              <Box sx={{ display: { xs: 'none', sm: 'flex' }, flexGrow: 1 }}>
                 <StyledLink to="/" sx={{ flexGrow: 1 }}>
-                  CAR SERVICE
+                  {t('navbar.carService')}
                 </StyledLink>
               </Box>
               <Box
                 sx={{
-                  display: { xs: "none", sm: "flex" },
+                  display: { xs: 'none', sm: 'flex' },
                   flexGrow: 1,
-                  justifyContent: "center",
+                  justifyContent: 'center',
                 }}
               >
                 <SearchBox
                   searchTerm={searchStore.searchTerm}
                   setSearchTerm={searchStore.setSearchTerm}
+                  placeholder={t('navbar.searchPlaceholder')}
                   handleSearch={() =>
                     searchStore.handleSearch(availableServices, navigate)
                   }
                   handleKeyDown={(event) => {
-                    if (event.key === "Enter") {
+                    if (event.key === 'Enter') {
                       searchStore.handleSearch(availableServices, navigate);
                     }
                   }}
@@ -105,54 +113,58 @@ const Navbar: React.FC = observer(() => {
               </Box>
               <Box
                 sx={{
-                  display: { xs: "none", sm: "flex" },
+                  display: { xs: 'none', sm: 'flex' },
                   flexGrow: 1,
-                  justifyContent: "flex-end",
-                  alignItems: "center",
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
                 }}
               >
                 {isAuthenticated ? (
                   <Button color="inherit" component={Link} to="/account">
-                    Личный кабинет
+                    {t('navbar.account')}
                   </Button>
                 ) : (
                   <Button color="inherit" component={Link} to="/login">
-                    Вход/Регистрация
+                    {t('navbar.login')}
                   </Button>
                 )}
+                <Button color="inherit" onClick={toggleLanguage}>
+                  {i18n.language === 'ru' ? 'EN' : 'RU'}
+                </Button>
                 <IconButton onClick={themeStore.toggleTheme} color="inherit">
                   {themeStore.darkMode ? (
-                    <WbSunny style={{ color: "yellow" }} />
+                    <WbSunny style={{ color: 'yellow' }} />
                   ) : (
-                    <Brightness3 style={{ color: "blue" }} />
+                    <Brightness3 style={{ color: 'blue' }} />
                   )}
                 </IconButton>
               </Box>
               <Box
                 sx={{
-                  display: { xs: "flex", sm: "none" },
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  width: "100%",
+                  display: { xs: 'flex', sm: 'none' },
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  width: '100%',
                 }}
               >
                 <SearchBox
                   searchTerm={searchStore.searchTerm}
                   setSearchTerm={searchStore.setSearchTerm}
+                  placeholder={t('navbar.searchPlaceholder')}
                   handleSearch={() =>
                     searchStore.handleSearch(availableServices, navigate)
                   }
                   handleKeyDown={(event) => {
-                    if (event.key === "Enter") {
+                    if (event.key === 'Enter') {
                       searchStore.handleSearch(availableServices, navigate);
                     }
                   }}
                 />
                 <IconButton onClick={themeStore.toggleTheme} color="inherit">
                   {themeStore.darkMode ? (
-                    <WbSunny style={{ color: "yellow" }} />
+                    <WbSunny style={{ color: 'yellow' }} />
                   ) : (
-                    <Brightness3 style={{ color: "blue" }} />
+                    <Brightness3 style={{ color: 'blue' }} />
                   )}
                 </IconButton>
               </Box>
@@ -169,8 +181,8 @@ const Navbar: React.FC = observer(() => {
           keepMounted: true,
         }}
         sx={{
-          display: { xs: "block", sm: "none" },
-          "& .MuiDrawer-paper": { boxSizing: "border-box", width: 240 },
+          display: { xs: 'block', sm: 'none' },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
         }}
       >
         <DrawerContent
@@ -179,10 +191,7 @@ const Navbar: React.FC = observer(() => {
           isAuthenticated={false}
         />
       </Drawer>
-      <ErrorBox
-        showError={searchStore.showError}
-        onHideError={handleHideError}
-      />
+      <ErrorBox showError={searchStore.showError} onHideError={handleHideError} />
     </Box>
   );
 });
