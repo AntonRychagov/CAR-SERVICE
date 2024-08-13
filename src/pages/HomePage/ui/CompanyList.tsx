@@ -11,7 +11,7 @@ type Service = {
 };
 
 const CompanyList: React.FC = () => {
-  const [services, setServices] = useState<Service[]>([]);
+  const [companys, setCompanys] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -19,8 +19,8 @@ const CompanyList: React.FC = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get('http://45.9.73.213:8001/api/v1/services');
-        setServices(response.data);
+        const response = await axios.get('http://45.9.73.213:8001/api/v1/company');
+        setCompanys(response.data.items);
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setError(error.message);
@@ -60,14 +60,14 @@ const CompanyList: React.FC = () => {
         </Typography>
       ) : (
         <Grid container spacing={3} direction="column">
-          {services.map((service) => (
-            <Grid item xs={12} key={service.id}>
+          {companys.map((company) => (
+            <Grid item xs={12} key={company.id}>
               <Paper
-                onClick={() => handleCardClick(service.id)}
+                onClick={() => handleCardClick(company.id)}
                 sx={{ padding: 2, cursor: 'pointer' }}
               >
-                <Typography variant="h6">{service.name}</Typography>
-                <Typography>{service.description}</Typography>
+                <Typography variant="h6">{company.name}</Typography>
+                <Typography>{company.description}</Typography>
               </Paper>
             </Grid>
           ))}
