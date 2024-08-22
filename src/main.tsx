@@ -3,6 +3,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { App } from "./app/App";
 import theme from "./app/theme";
+import './shared/lib/i18n';
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 

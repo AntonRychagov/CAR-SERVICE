@@ -1,18 +1,18 @@
-import React from "react";
-import { Box, Typography, Container } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import React from 'react';
+import { Box, Typography, Container } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 const OuterFooterContainer = styled(Box)({
-  backgroundColor: "#1a1a1a",
-  width: "100%",
-  position: "relative",
+  backgroundColor: '#1a1a1a',
+  width: '100%',
+  position: 'relative',
   bottom: 0,
 });
 
 const FooterContainer = styled(Container)({
-  color: "#fff",
-  padding: "16px",
-  textAlign: "center",
+  color: '#fff',
+  padding: '16px',
+  textAlign: 'center',
 });
 
 const Footer: React.FC = () => (

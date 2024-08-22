@@ -46,13 +46,13 @@ const StyledInputBase = styled(InputBase)(({ theme }: { theme: Theme }) => ({
 }));
 
 const SearchBox: React.FC<SearchBoxProps> = observer(
-  ({ searchTerm, setSearchTerm, handleKeyDown }) => (
+  ({ searchTerm, setSearchTerm, handleKeyDown, placeholder }) => (
     <SearchBoxContainer>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        placeholder="Найти автосервис"
+        placeholder={placeholder}
         inputProps={{ "aria-label": "search" }}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
