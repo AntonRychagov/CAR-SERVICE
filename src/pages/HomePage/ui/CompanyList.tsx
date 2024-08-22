@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Grid, Paper, Typography, Box, CircularProgress } from '@mui/material';
+import {
+  Grid,
+  Paper,
+  Typography,
+  Box,
+  CircularProgress,
+  Pagination,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import theme from '../../../app/theme';
 
@@ -11,16 +18,28 @@ type Service = {
 };
 
 const CompanyList: React.FC = () => {
-  const [services, setServices] = useState<Service[]>([]);
+  const [companys, setCompanys] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const pageSize = 3; 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get('http://45.9.73.213:8001/api/v1/services');
-        setServices(response.data);
+        setLoading(true);
+        const { data } = await axios.get(
+          `https://gas159.ru/api/v1/company?page=${page}&size=${pageSize}`,
+        );
+
+        const items = data.items;
+        const totalItems = data.total;
+        const totalPagesCalculated = Math.ceil(totalItems / pageSize);
+
+        setCompanys(items);
+        setTotalPages(totalPagesCalculated);
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setError(error.message);
@@ -33,10 +52,14 @@ const CompanyList: React.FC = () => {
     };
 
     fetchServices();
-  }, []);
+  }, [page, pageSize]);
 
   const handleCardClick = (id: number) => {
     navigate(`/service/${id}`);
+  };
+
+  const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
   };
 
   return (
@@ -59,19 +82,31 @@ const CompanyList: React.FC = () => {
           {error}
         </Typography>
       ) : (
-        <Grid container spacing={3} direction="column">
-          {services.map((service) => (
-            <Grid item xs={12} key={service.id}>
-              <Paper
-                onClick={() => handleCardClick(service.id)}
-                sx={{ padding: 2, cursor: 'pointer' }}
-              >
-                <Typography variant="h6">{service.name}</Typography>
-                <Typography>{service.description}</Typography>
-              </Paper>
-            </Grid>
-          ))}
-        </Grid>
+        <>
+          <Grid container spacing={3} direction="column">
+            {companys.map((company) => (
+              <Grid item xs={12} key={company.id}>
+                <Paper
+                  onClick={() => handleCardClick(company.id)}
+                  sx={{ padding: 2, cursor: 'pointer' }}
+                >
+                  <Typography variant="h6">{company.name}</Typography>
+                  <Typography>{company.description}</Typography>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+            <Pagination
+              count={totalPages}
+              page={page}
+              onChange={handlePageChange}
+              shape="rounded"
+              color="primary"
+              variant="outlined"
+            />
+          </Box>
+        </>
       )}
     </Box>
   );
