@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { observer } from "mobx-react-lite";
+import React, { useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { observer } from 'mobx-react-lite';
 import {
   Button,
   TextField,
@@ -12,11 +12,12 @@ import {
   CircularProgress,
   IconButton,
   InputAdornment,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
-import authStore from "../../../shared/lib/store/AuthStore";
-import { IFormInput } from "../../../shared/types";
+} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import authStore from '../../../shared/lib/store/AuthStore';
+import { IFormInput } from '../../../shared/types';
+import { MainRoutePath } from '../../../shared/config/routeConfig/routeConfig';
 
 const useLoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,9 +28,7 @@ const useLoginForm = () => {
   } = useForm<IFormInput>();
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 
@@ -38,7 +37,7 @@ const useLoginForm = () => {
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     await authStore.login(data.email, data.password);
     if (!authStore.error) {
-      navigate("/"); // Путь к основной странице сайта
+      navigate('/'); // Путь к основной странице сайта
     }
   };
 
@@ -55,14 +54,14 @@ const useLoginForm = () => {
 };
 
 const inputStyles = {
-  "& .MuiOutlinedInput-root": {
-    "&.Mui-focused fieldset": {
-      borderColor: "#000",
+  '& .MuiOutlinedInput-root': {
+    '&.Mui-focused fieldset': {
+      borderColor: '#000',
     },
   },
-  "& .MuiInputLabel-root": {
-    "&.Mui-focused": {
-      color: "#000",
+  '& .MuiInputLabel-root': {
+    '&.Mui-focused': {
+      color: '#000',
     },
   },
 };
@@ -84,33 +83,33 @@ const Login: React.FC = observer(() => {
       component="main"
       maxWidth="xs"
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
       }}
     >
-      <Paper elevation={3} sx={{ padding: 4, width: "100%" }}>
+      <Paper elevation={3} sx={{ padding: 4, width: '100%' }}>
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
           <Typography variant="h4" gutterBottom align="center">
             Авторизация
           </Typography>
           <TextField
             label="Email"
-            {...register("email", { required: "Введите email" })}
+            {...register('email', { required: 'Введите email' })}
             error={!!errors.email}
-            helperText={errors.email ? String(errors.email.message) : ""}
+            helperText={errors.email ? String(errors.email.message) : ''}
             fullWidth
             margin="normal"
             sx={inputStyles}
           />
           <TextField
             label="Пароль"
-            type={showPassword ? "text" : "password"}
-            {...register("password", { required: "Введите пароль" })}
+            type={showPassword ? 'text' : 'password'}
+            {...register('password', { required: 'Введите пароль' })}
             error={!!errors.password}
-            helperText={errors.password ? String(errors.password.message) : ""}
+            helperText={errors.password ? String(errors.password.message) : ''}
             fullWidth
             margin="normal"
             sx={inputStyles}
@@ -136,18 +135,18 @@ const Login: React.FC = observer(() => {
             fullWidth
             sx={{
               mt: 2,
-              borderRadius: "20px",
-              position: "relative",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              borderRadius: '20px',
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
             disabled={authStore.isLoading}
           >
             {authStore.isLoading ? (
-              <CircularProgress size={24} sx={{ color: "white" }} />
+              <CircularProgress size={24} sx={{ color: 'white' }} />
             ) : (
-              "Войти"
+              'Войти'
             )}
           </Button>
           {authStore.error && (
@@ -155,15 +154,25 @@ const Login: React.FC = observer(() => {
               {authStore.error}
             </Typography>
           )}
-          <Typography variant="body2" align="center" sx={{ mt: 2 }}>
-            Нет аккаунта?{" "}
-            <Link
-              onClick={() => navigate("/register")}
-              sx={{ textDecoration: "none", cursor: "pointer" }}
-            >
-              Регистрация
-            </Link>
-          </Typography>
+          <Box display="block" justifyContent="center" textAlign="center" sx={{ mt: 2 }}>
+            <Typography variant="body2">
+              Нет аккаунта?{' '}
+              <Link
+                onClick={() => navigate(MainRoutePath.register)}
+                sx={{ textDecoration: 'none', cursor: 'pointer' }}
+              >
+                Регистрация
+              </Link>
+            </Typography>
+            <Typography variant="body2" sx={{ mt: 3 }}>
+              <Link
+                onClick={() => navigate(MainRoutePath.main)}
+                sx={{ textDecoration: 'none', cursor: 'pointer' }}
+              >
+                Вернуться на главную страницу
+              </Link>
+            </Typography>
+          </Box>
         </Box>
       </Paper>
     </Container>
