@@ -23,7 +23,7 @@ const CompanyList: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const pageSize = 3; 
+  const pageSize = 3;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const CompanyList: React.FC = () => {
       try {
         setLoading(true);
         const { data } = await axios.get(
-          `https://gas159.ru/api/v1/company?page=${page}&size=${pageSize}`,
+          `https://gas159.ru/api/v1/companies?page=${page}&size=${pageSize}`,
         );
 
         const items = data.items;
